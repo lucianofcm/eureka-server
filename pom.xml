@@ -41,13 +41,43 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	 <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <requiresUnpack>
+            <dependency>
+              <groupId>com.netflix.eureka</groupId>
+              <artifactId>eureka-core</artifactId>
+            </dependency>
+            <dependency>
+              <groupId>com.netflix.eureka</groupId>
+              <artifactId>eureka-client</artifactId>
+            </dependency>
+          </requiresUnpack>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <configuration>
+          <appName>${heroku.appName}</appName>
+          <includeTarget>false</includeTarget>
+          <includes>
+            <include>target/${project.build.finalName}.jar</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
